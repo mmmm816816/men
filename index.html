@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="/scripts/axios.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-->
+</head>
+
+<body>
+    <button onclick="sendMessage()">WS Send</button>
+    <hr>
+    <script>
+        const socket = new WebSocket('ws://localhost:3000');
+        socket.addEventListener('message', async (e) => {
+            //console.log(e); // MessageEvent {isTrusted: true, data: Blob, origin: 'ws://localhost:3333', lastEventId: '', source: null, …}
+            //console.log(e.data.text()); // promise if async is removed
+            await e.data.text().then((x) => console.log(x));
+        });
+        socket.addEventListener('open', (e) => {
+            console.log('Connected to WebSocket server');
+        });
+        const sendMessage = () => {
+            socket.send('Hello from Client1');
+        };
+    </script>
+    <button onclick="doGet()">doGet</button>
+    <br>
+    <button onclick="doGetById()">doGetById</button>
+    <br>
+    <button onclick="doPost()">doPost</button>
+    <br>
+    <button onclick="doPatchById()">doPatchById</button>
+    <br>
+    <button onclick="doPatchByRackNo()">doPatchByRackNo</button><lable>X3333 EEE #0000</lable>
+    <br>
+    <button onclick="doDeleteById()">doDeleteById</button>
+    <br>
+    <script>
+        function doGet() {
+            axios({
+                method: 'get',
+                url: 'http://localhost:3000/yyy'//'http://localhost:3000/xxx'
+            })
+                .then(res => console.log(res.data))
+                .catch(err => console.error(err));
+        }
+        function doGetById() {
+            axios({
+                method: 'get',
+                url: 'http://localhost:3000/xxx/62025da5cf592692938df3ad'
+            })
+                .then(res => console.log(res.data))
+                .catch(err => console.error(err));
+        }
+        function doPost() {
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/xxx',
+                data: {
+                    content: 'conPost',
+                    author: 'authPost'
+                }
+            })
+                .then(res => console.log(res.data))
+                .catch(err => console.error(err));
+        }
+        function doPatchById() {
+            axios({
+                method: 'patch',
+                url: 'http://localhost:3000/xxx/62025da5cf592692938df3ad',
+                data: {
+                    author: 'authPatch'
+                }
+            })
+                .then(res => console.log(res.data))
+                .catch(err => console.error(err));
+        }
+        function doPatchByRackNo() {
+            axios({
+                method: 'patch',
+                url: 'http://localhost:3000/rackno/5-3',
+                data: {
+                    unit: 'X3333 EEE #0000' //A333 DVT #0000
+                }
+            })
+                .then(res => console.log(res.data))
+                .catch(err => console.error(err));
+        }
+        function doDeleteById() {
+            axios({
+                method: 'delete',
+                url: 'http://localhost:3000/xxx/62025da5cf592692938df3ad'
+            })
+                .then(res => console.log(res.data))
+                .catch(err => console.error(err));
+        }
+    </script>
+
+</body>
+
+</html>

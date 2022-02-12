@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/scripts/axios.min.js"></script>
+    <script src="bootstrap.bundle.4.6.1.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.4.6.1.min.css">
+</head>
+
+<body>
+    <!--<button onclick="sendMessage()">Send</button>
+    <hr>
+    <button onclick="doGetByLaneNo()">doGetById</button>-->
+    <div class="container">
+        <div class="card-deck mt-3" id="card-deck"></div>
+    </div>
+    <script>
+        function setCardsElements(obj, bgColor) {
+            // <div class="card-body text-center"></div>
+            const div1 = document.createElement('div');
+            div1.setAttribute('class', 'card-body text-center');
+
+            // <p class="card-title d-flex justify-content-start">Rack x-x</p>
+            const p1 = document.createElement('p');
+            p1.setAttribute('class', 'card-title d-flex justify-content-start');
+            p1.innerHTML = 'Rack ' + obj.rackNo;
+            div1.append(p1);
+
+            // <hr>
+            const hr = document.createElement('hr');
+            div1.append(hr);
+
+            if (obj.units !== undefined) {
+                /*
+                for (let j = 0; j < obj.units.length; j++) {
+                    // <p class="card-text">J111 DVT #1111 <kbd>HDMI</kbd><p>
+                    let p2 = document.createElement('p');
+                    p2.setAttribute('class', 'card-text');
+                    p2.innerHTML = obj.units[j] + '<kbd>1</kbd>';
+                    div1.append(p2);
+                }
+                */
+                Object.keys(obj.units).forEach((x) => {
+                    // <p class="card-text">J111 DVT #1111 HDMI<p>
+                    let p2 = document.createElement('p');
+                    p2.setAttribute('class', 'card-text');
+                    //p2.innerHTML = obj.units[x];
+                    if (typeof obj.units[x] === 'object') {
+                        p2.innerHTML = obj.units[x].join(' + <kbd>') + '</kbd>';
+                    } else {
+                        p2.innerHTML = obj.units[x];
+                    }
+                    div1.append(p2);
+                });
+            } else {
+                // <p class="card-text">J111 DVT #1111 + Plugger1<p>
+                let p2 = document.createElement('p');
+                p2.setAttribute('class', 'card-text');
+                p2.innerHTML = obj.unit + ' + ' + obj.plugger;
+                div1.append(p2);
+
+                // <p class="card-text"><kbd>HDMI</kbd><br><kbd>HDMI</kbd><br><p>
+                let p3 = document.createElement('p');
+                p3.setAttribute('class', 'card-text');
+                for (let k = 0; k < obj.monitors.length; k++) {
+                    let kbd = document.createElement('kbd');
+                    kbd.innerHTML = obj.monitors[k];
+                    p3.append(kbd);
+                    let br = document.createElement('br');
+                    p3.append(br);
+                }
+                div1.append(p3);
+            }
+
+            // <div class="card {{bgColor}}"></div>
+            const div2 = document.createElement('div');
+            div2.setAttribute('class', 'card ' + bgColor);
+            div2.append(div1);
+
+            document.getElementById('card-deck').append(div2);
+        }
+
+        function doGetByLaneNo() {
+            axios({
+                method: 'get',
+                url: 'http://localhost:3000/laneno/5'
+            })
+                .then(res => {
+                    //console.log(res.data);
+                    let objArr = res.data;
+                    let bgColors = ['alert-primary', 'alert-warning', 'alert-success', 'alert-danger'];
+                    //console.log(objArr.length);
+                    for (let i = 0; i < objArr.length; i++) {
+                        console.log(objArr[i]);
+                        setCardsElements(objArr[i], bgColors[i]);
+                    }
+                    //document.getElementById('msg').innerHTML = res.data; //JSON.parse(res.data); // Unexpected token o in JSON at position 1
+                })
+                .catch(err => console.error(err));
+        }
+        const socket = new WebSocket('ws://localhost:3000');
+        const sendMessage = () => {
+            socket.send('Hello from Client copy');
+        };
+        socket.addEventListener('message', (e) => {
+            if (typeof e.data == 'object') e.data.text().then((x) => console.log(x));
+            console.log(e.data); // String // Else //for message, this becomes blob but the first message is object
+            document.getElementById('card-deck').innerHTML = '';
+            doGetByLaneNo(); // Update status
+        });
+        socket.addEventListener('open', (e) => { // e === Event, e.type === OPEN
+            //console.log(e);
+            console.log('Connected to WebSocket server');
+        });
+    </script>
+    <script>
+        (function () {
+            document.getElementById('card-deck').innerHTML = '';
+            doGetByLaneNo();
+        }());
+    </script>
+</body>
+
+</html>

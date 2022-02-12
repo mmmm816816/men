@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <button onclick="sendMessage()">Send</button>
+    <div id="wsMsg"></div>
+</body>
+<script>
+    const socket = new WebSocket('ws://localhost:3000');
+    const sendMessage = () => {
+        socket.send('Hello from Client copy');
+    };
+    /*
+        socket.addEventListener('message', async (e) => { // e === MessageEvent, e.type === OPEN
+            console.log(e); // MessageEvent {isTrusted: true, data: Blob, origin: 'ws://localhost:3333', lastEventId: '', source: null, …}
+            console.log(e.data.text()); // promise if async is removed
+            await e.data.text().then((x) => console.log(x));
+        });
+    *//*
+        socket.addEventListener('message', (e) => {
+            //console.log(e);
+            console.log(e.data); // for message, this becomes blob but the first message is object
+        });
+    */
+    socket.addEventListener('message', (e) => {
+        //console.log(e);
+        if (typeof e.data == 'object') e.data.text().then((x) => console.log(x));
+        console.log(e.data); // String //for message, this becomes blob but the first message is object
+    });
+    socket.addEventListener('open', (e) => { // e === Event, e.type === OPEN
+        console.log(e);
+        console.log('Connected to WebSocket server');
+        /*
+        await e.data.text().then((x) => {
+            console.log('Connected to WebSocket server');
+            console.log(x);
+        });
+        */
+    });
+</script>
+
+</html>
