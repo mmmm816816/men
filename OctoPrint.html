@@ -9,8 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
-        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>-->
+    <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <style>
         td:hover {
             cursor: move;
@@ -61,7 +63,7 @@
 </head>
 
 <body class="container">
-    <h2 class="border-primary text-primary font-weight-bold mt-3">Serial Controller</h2>
+    <h2 class="border-primary text-primary font-weight-bold mt-3"><b>Serial Controller</b></h2>
     <div class="progress" style="height:5px">
         <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width:70%;height:5px">
         </div>
@@ -78,7 +80,7 @@
         <textarea readonly id="receiveText" class="form-control mt-3"></textarea>
     </div>
 
-    <h2 class="border-primary text-primary font-weight-bold mt-3">REST API</h2>
+    <h2 class="border-primary text-primary font-weight-bold mt-3"><b>REST API</b></h2>
     <div class="progress" style="height:5px">
         <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width:70%;height:5px">
         </div>
@@ -119,7 +121,7 @@
         </div>
     </div>
 
-    <h2 class="border-primary text-primary font-weight-bold mt-3">Request Manager</h2>
+    <h2 class="border-primary text-primary font-weight-bold mt-3"><b>Request Manager</b></h2>
     <div class="progress" style="height:5px">
         <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width:70%;height:5px">
         </div>
@@ -153,14 +155,15 @@
         </table>
     </div>
     <div class="mt-3">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Schedule</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"
+            onclick="updateDuppedTable()">Schedule</button>
         <div class="modal" id="myModal">
             <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Modal Heading</h4>
+                        <h4 class="modal-title">Final Confirmation</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -188,202 +191,211 @@
                 </div>
             </div>
         </div>
-    </div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobs">View</button>
+        <div class="modal" id="jobs">
+            <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+                <div class="modal-content">
 
-    <h2 class="border-primary text-primary font-weight-bold mt-3">Object Detection</h2>
-    <div class="progress" style="height:5px">
-        <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width:70%;height:5px">
-        </div>
-    </div>
-    <div class="mt-3">
-        <section id="demos" class="invisible">
-            <div id="liveView" class="camView">
-                <button id="webcamButton" class="btn btn-primary">Enable Webcam</button>
-                <video id="webcam" autoplay width="640" height="480"></video>
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Jobs</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>Estimated Time of Completion:</p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Automate</button>
+                    </div>
+
+                </div>
             </div>
-        </section>
-        <!-- Import TensorFlow.js library -->
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" type="text/javascript"></script>
-        <!-- Load the coco-ssd model to use to recognize things in images -->
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
-    </div>
-    <script type="text/javascript">
-        /* serial serial controller */
+        </div>
 
-        //Define the elements
-        let sendText = document.getElementById("sendText");
-        let sendButton = document.getElementById("sendButton");
-        let receiveText = document.getElementById("receiveText");
-        let connectButton = document.getElementById("connectButton");
-        let statusBar = document.getElementById("statusBar");
+        <h2 class="border-primary text-primary font-weight-bold mt-3"><b>Object Detection</b></h2>
+        <div class="progress" style="height:5px">
+            <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
+                style="width:70%;height:5px">
+            </div>
+        </div>
+        <div class="mt-3">
+            <section id="demos" class="invisible">
+                <div id="liveView" class="camView">
+                    <button id="webcamButton" class="btn btn-primary">Enable Webcam</button>
+                    <video id="webcam" autoplay width="640" height="480"></video>
+                </div>
+            </section>
+            <!-- Import TensorFlow.js library -->
+            <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" type="text/javascript"></script>
+            <!-- Load the coco-ssd model to use to recognize things in images -->
+            <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+        </div>
+        <script type="text/javascript">
+            /* serial serial controller */
 
-        //Couple the elements to the Events
-        connectButton.addEventListener("click", clickConnect)
-        sendButton.addEventListener("click", clickSend)
+            //Define the elements
+            let sendText = document.getElementById("sendText");
+            let sendButton = document.getElementById("sendButton");
+            let receiveText = document.getElementById("receiveText");
+            let connectButton = document.getElementById("connectButton");
+            let statusBar = document.getElementById("statusBar");
 
-        //When the connectButton is pressed
-        async function clickConnect() {
-            if (port) {
-                //if already connected, disconnect
-                disconnect();
-            } else {
-                //otherwise connect
-                await connect();
+            //Couple the elements to the Events
+            connectButton.addEventListener("click", clickConnect)
+            sendButton.addEventListener("click", clickSend)
+
+            //When the connectButton is pressed
+            async function clickConnect() {
+                if (port) {
+                    //if already connected, disconnect
+                    disconnect();
+                } else {
+                    //otherwise connect
+                    await connect();
+                }
             }
-        }
 
-        //Define outputstream, inputstream and port so they can be used throughout the sketch
-        var outputStream, inputStream, port, serialReader;
+            //Define outputstream, inputstream and port so they can be used throughout the sketch
+            var outputStream, inputStream, port, serialReader;
 
-        navigator.serial.addEventListener('connect', e => {
-            statusBar.innerText = `Connected to ${e.port}`;
-            connectButton.innerText = "Disconnect";
-        });
-
-        navigator.serial.addEventListener('disconnect', e => {
-            statusBar.innerText = `Disconnected`;
-            connectButton.innerText = "Connect";
-        });
-
-        //Connect to the Arduino
-        async function connect() {
-            disconnect();
-            //Optional filter to only see relevant boards
-            const filter = {
-                usbVendorId: 0x2341 // Arduino SA
-            };
-
-            //Try to connect to the Serial port
-            try {
-                port = await navigator.serial.requestPort(/*{ filters: [filter] }*/);
-                // Continue connecting to |port|.
-                // - Wait for the port to open.
-                await port.open({ baudRate: 115200 });
-
-                statusBar.innerText = "Connected";
+            navigator.serial.addEventListener('connect', e => {
+                statusBar.innerText = `Connected to ${e.port}`;
                 connectButton.innerText = "Disconnect";
-
-                let decoder = new TextDecoderStream();
-                inputDone = port.readable.pipeTo(decoder.writable);
-                inputStream = decoder.readable;
-
-                const encoder = new TextEncoderStream();
-                outputDone = encoder.readable.pipeTo(port.writable);
-                outputStream = encoder.writable;
-
-                serialReader = inputStream.getReader();
-                readLoop();
-            } catch (e) {
-
-                //If the pipeTo error appears; clarify the problem by giving suggestions.
-                if (e == "TypeError: Cannot read property 'pipeTo' of undefined") {
-                    e += "\n Use Google Chrome and enable-experimental-web-platform-features";
-                }
-                if (e == "TypeError: Failed to execute 'requestPort' on 'Serial': 1 argument required, but only 0 present.") {
-                    e += "\n Use Google Chrome and enable-experimental-web-platform-features";
-                }
-                if (e == "NetworkError: Failed to open serial port.") {
-                    e += "Try unplugging the Arduino and connect again";
-                }
-                disconnect();
-                connectButton.innerText = "Connect";
-                statusBar.innerText = e;
-            }
-        }
-
-        //Write to the Serial port
-        async function writeToStream(line) {
-            const writer = outputStream.getWriter();
-            writer.write(line);
-            writer.releaseLock();
-        }
-
-        //Disconnect from the Serial port
-        async function disconnect() {
-
-            if (serialReader) {
-                await serialReader.cancel();
-                await inputDone.catch(() => { });
-                serialReader = null;
-                inputDone = null;
-            }
-
-            if (outputStream) {
-                await outputStream.getWriter().close();
-                await outputDone;
-                outputStream = null;
-                outputDone = null;
-            }
-
-            statusBar.innerText = "Disconnected";
-            connectButton.innerText = "Connect";
-            //Close the port.
-            await port.close();
-            port = null;
-        }
-
-        //When the send button is pressed
-        function clickSend() {
-            //send the message
-            writeToStream(sendText.value);
-            //and clear the input field, so it's clear it has been sent
-            sendText.value = "";
-        }
-
-        //Read the incoming data
-        async function readLoop() {
-            while (true) {
-                const { value, done } = await serialReader.read();
-                if (done === true) {
-                    break;
-                }
-                //When recieved something add it to the big textarea
-                receiveText.value += value;
-                serialString = receiveText.value;
-                //Scroll to the bottom of the text field
-                var patt = new RegExp(/([0-9]{1,6}), ([0-9]{1,6})\n/m);
-                var res = patt.exec(serialString);
-                if (res != null) {
-                    serialString = serialString.replace(patt, "");
-                }
-                receiveText.value = serialString;
-                receiveText.scrollTop = receiveText.scrollHeight;
-            }
-        }
-    </script>
-    <script>
-        /* Draggable Table */
-        var fixHelperModified = function (e, tr) {
-            var $originals = tr.children();
-            var $helper = tr.clone();
-            $helper.children().each(function (index) {
-                $(this).width($originals.eq(index).width())
             });
-            return $helper;
-        },
-            updateIndex = function (e, ui) {
-                $('td.index', ui.item.parent()).each(function (i) {
-                    $(this).html(i + 1);
+
+            navigator.serial.addEventListener('disconnect', e => {
+                statusBar.innerText = `Disconnected`;
+                connectButton.innerText = "Connect";
+            });
+
+            //Connect to the Arduino
+            async function connect() {
+                disconnect();
+                //Optional filter to only see relevant boards
+                const filter = {
+                    usbVendorId: 0x2341 // Arduino SA
+                };
+
+                //Try to connect to the Serial port
+                try {
+                    port = await navigator.serial.requestPort(/*{ filters: [filter] }*/);
+                    // Continue connecting to |port|.
+                    // - Wait for the port to open.
+                    await port.open({ baudRate: 115200 });
+
+                    statusBar.innerText = "Connected";
+                    connectButton.innerText = "Disconnect";
+
+                    let decoder = new TextDecoderStream();
+                    inputDone = port.readable.pipeTo(decoder.writable);
+                    inputStream = decoder.readable;
+
+                    const encoder = new TextEncoderStream();
+                    outputDone = encoder.readable.pipeTo(port.writable);
+                    outputStream = encoder.writable;
+
+                    serialReader = inputStream.getReader();
+                    readLoop();
+                } catch (e) {
+
+                    //If the pipeTo error appears; clarify the problem by giving suggestions.
+                    if (e == "TypeError: Cannot read property 'pipeTo' of undefined") {
+                        e += "\n Use Google Chrome and enable-experimental-web-platform-features";
+                    }
+                    if (e == "TypeError: Failed to execute 'requestPort' on 'Serial': 1 argument required, but only 0 present.") {
+                        e += "\n Use Google Chrome and enable-experimental-web-platform-features";
+                    }
+                    if (e == "NetworkError: Failed to open serial port.") {
+                        e += "Try unplugging the Arduino and connect again";
+                    }
+                    disconnect();
+                    connectButton.innerText = "Connect";
+                    statusBar.innerText = e;
+                }
+            }
+
+            //Write to the Serial port
+            async function writeToStream(line) {
+                const writer = outputStream.getWriter();
+                writer.write(line);
+                writer.releaseLock();
+            }
+
+            //Disconnect from the Serial port
+            async function disconnect() {
+
+                if (serialReader) {
+                    await serialReader.cancel();
+                    await inputDone.catch(() => { });
+                    serialReader = null;
+                    inputDone = null;
+                }
+
+                if (outputStream) {
+                    await outputStream.getWriter().close();
+                    await outputDone;
+                    outputStream = null;
+                    outputDone = null;
+                }
+
+                statusBar.innerText = "Disconnected";
+                connectButton.innerText = "Connect";
+                //Close the port.
+                await port.close();
+                port = null;
+            }
+
+            //When the send button is pressed
+            function clickSend() {
+                //send the message
+                writeToStream(sendText.value);
+                //and clear the input field, so it's clear it has been sent
+                sendText.value = "";
+            }
+
+            //Read the incoming data
+            async function readLoop() {
+                while (true) {
+                    const { value, done } = await serialReader.read();
+                    if (done === true) {
+                        break;
+                    }
+                    //When recieved something add it to the big textarea
+                    receiveText.value += value;
+                    serialString = receiveText.value;
+                    //Scroll to the bottom of the text field
+                    var patt = new RegExp(/([0-9]{1,6}), ([0-9]{1,6})\n/m);
+                    var res = patt.exec(serialString);
+                    if (res != null) {
+                        serialString = serialString.replace(patt, "");
+                    }
+                    receiveText.value = serialString;
+                    receiveText.scrollTop = receiveText.scrollHeight;
+                }
+            }
+        </script>
+        <script>
+            /* Draggable Table */
+            var fixHelperModified = function (e, tr) {
+                var $originals = tr.children();
+                var $helper = tr.clone();
+                $helper.children().each(function (index) {
+                    $(this).width($originals.eq(index).width())
                 });
-                $('input[type=text]', ui.item.parent()).each(function (i) {
-                    $(this).val(i + 1);
-                });
-            };
-        /*
-                $("#myTable tbody").sortable({
-                    helper: fixHelperModified,
-                    stop: updateIndex
-                }).disableSelection();
-        
-                $("tbody").sortable({
-                    distance: 5,
-                    delay: 100,
-                    opacity: 0.6,
-                    cursor: 'move',
-                    update: function () { }
-                });
-        */
-        function makeTableSortable() {
+                return $helper;
+            },
+                updateIndex = function (e, ui) {
+                    $('td.index', ui.item.parent()).each(function (i) {
+                        $(this).html(i + 1);
+                    });
+                    $('input[type=text]', ui.item.parent()).each(function (i) {
+                        $(this).val(i + 1);
+                    });
+                };
             $("#myTable tbody").sortable({
                 helper: fixHelperModified,
                 stop: updateIndex
@@ -396,169 +408,192 @@
                 cursor: 'move',
                 update: function () { }
             });
-        }
-    </script>
+            function makeTableSortable() {
+                $("#myTable tbody").sortable({
+                    helper: fixHelperModified,
+                    stop: updateIndex
+                }).disableSelection();
 
-    <script>
-        /* Printer operations > Retrieve the current printer state */
-        function doGetPrinterState() {
-            axios({
-                method: 'get',
-                url: 'http://10.10.10.10/api/printer?history=true&limit=2',
-                headers: { 'X-Api-Key': 'xxxxyyyzzz' }
-            })
-                .then(res => console.log(res))
-                .catch(err => console.error(err));
-        }
-
-        /* File operations > Retrieve files from specific location */
-        function doGetGcodes() {
-            axios({
-                method: 'get',
-                url: 'http://10.10.10.10/api/files/sdcard',
-                headers: { 'X-Api-Key': 'xxxxyyyzzz' }
-            })
-                .then(res => console.log(res))
-                .catch(err => console.error(err));
-        }
-
-        /* Printer operations > Send an arbitrary command to the printer */
-        function doPostPrintingCommands() {
-            axios({
-                method: 'post',
-                url: 'http://10.10.10.10/api/printer/command',
-                headers: { 'X-Api-Key': 'xxxxyyyzzz' },
-                data: {
-                    commands: ['M23 /musicg\~1/jingle.gco', 'M24']
-                }
-            })
-                .then(res => console.log(res))
-                .catch(err => console.error(err));
-        }
-
-        /* Rest API */
-        function doPost() {
-            axios({
-                method: 'post',
-                url: 'https://jsonplaceholder.typicode.com/todos',
-                headers: { 'X-Api-Key': 'xxxxyyyzzz' },
-                data: {
-                    title: 'New Todo',
-                    completed: false
-                }
-            })
-                .then(res => console.log(res))
-                .catch(err => console.error(err));
-        }
-    </script>
-
-    <!-- Import the page's JavaScript to do some stuff -->
-    <script defer>
-        const video = document.getElementById('webcam');
-        const liveView = document.getElementById('liveView');
-        const demosSection = document.getElementById('demos');
-        const enableWebcamButton = document.getElementById('webcamButton');
-
-        // Check if webcam access is supported.
-        function getUserMediaSupported() {
-            return !!(navigator.mediaDevices &&
-                navigator.mediaDevices.getUserMedia);
-        }
-
-        // If webcam supported, add event listener to button for when user
-        // wants to activate it to call enableCam function which we will 
-        // define in the next step.
-        if (getUserMediaSupported()) {
-            enableWebcamButton.addEventListener('click', enableCam);
-        } else {
-            console.warn('getUserMedia() is not supported by your browser');
-        }
-
-        // Enable the live webcam view and start classification.
-        function enableCam(event) {
-            // Only continue if the COCO-SSD has finished loading.
-            if (!model) {
-                return;
+                $("tbody").sortable({
+                    distance: 5,
+                    delay: 100,
+                    opacity: 0.6,
+                    cursor: 'move',
+                    update: function () { }
+                });
             }
 
-            // Hide the button once clicked.
-            event.target.classList.add('removed');
-
-            // getUsermedia parameters to force video but not audio.
-            const constraints = {
-                video: true
-            };
-
-            // Activate the webcam stream.
-            navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
-                video.srcObject = stream;
-                video.addEventListener('loadeddata', predictWebcam);
-            });
-        }
-
-        // Pretend model has loaded so we can try out the webcam code.
-        var model = true;
-        demosSection.classList.remove('invisible');
-
-        // Store the resulting model in the global scope of our app.
-        var model = undefined;
-
-        // Before we can use COCO-SSD class we must wait for it to finish
-        // loading. Machine Learning models can be large and take a moment 
-        // to get everything needed to run.
-        // Note: cocoSsd is an external object loaded from our index.html
-        // script tag import so ignore any warning in Glitch.
-
-        cocoSsd.load().then(function (loadedModel) {
-            model = loadedModel;
-            // Show demo section now model is ready to use.
-            demosSection.classList.remove('invisible');
-        });
-
-        var children = [];
-
-        // Placeholder function for next step.
-        function predictWebcam() {
-            // Now let's start classifying a frame in the stream.
-            model.detect(video).then(function (predictions) {
-                // Remove any highlighting we did previous frame.
-                for (let i = 0; i < children.length; i++) {
-                    liveView.removeChild(children[i]);
-                }
-                children.splice(0);
-
-                // Now lets loop through predictions and draw them to the live view if
-                // they have a high confidence score.
-                for (let n = 0; n < predictions.length; n++) {
-                    // If we are over 66% sure we are sure we classified it right, draw it!
-                    if (predictions[n].score > 0.66) {
-                        const p = document.createElement('p');
-                        p.innerText = predictions[n].class + ' - with '
-                            + Math.round(parseFloat(predictions[n].score) * 100)
-                            + '% confidence.';
-                        p.style = 'margin-left: ' + predictions[n].bbox[0] + 'px; margin-top: '
-                            + (predictions[n].bbox[1] - 10) + 'px; width: '
-                            + (predictions[n].bbox[2] - 10) + 'px; top: 0; left: 0;';
-
-                        const highlighter = document.createElement('div');
-                        highlighter.setAttribute('class', 'highlighter');
-                        highlighter.style = 'left: ' + predictions[n].bbox[0] + 'px; top: '
-                            + predictions[n].bbox[1] + 'px; width: '
-                            + predictions[n].bbox[2] + 'px; height: '
-                            + predictions[n].bbox[3] + 'px;';
-
-                        liveView.appendChild(highlighter);
-                        liveView.appendChild(p);
-                        children.push(highlighter);
-                        children.push(p);
+            /* Confirm requests */
+            function updateDuppedTable() {
+                document.querySelectorAll('#duppedTBody > tr').forEach(x => x.remove());
+                for (let i = 0; i < document.getElementById('myTable').tBodies[0].rows.length; i++) {
+                    if (document.getElementById('myTable').tBodies[0].rows[i].cells[2].children[0].value > 0) {
+                        document.getElementById('duppedTBody').append(document.getElementById('myTable').tBodies[0].rows[i].cloneNode(true));
                     }
                 }
+            }
+        </script>
 
-                // Call this function again to keep predicting when the browser is ready.
-                window.requestAnimationFrame(predictWebcam);
+        <script>
+            /* Printer operations > Retrieve the current printer state */
+            function doGetPrinterState() {
+                axios({
+                    method: 'get',
+                    url: 'http://10.10.10.10/api/printer?history=true&limit=2',
+                    headers: { 'X-Api-Key': 'xxxxyyyzzz' }
+                })
+                    .then(res => console.log(res))
+                    .catch(err => console.error(err));
+            }
+
+            /* File operations > Retrieve files from specific location */
+            function doGetGcodes() {
+                axios({
+                    method: 'get',
+                    url: 'http://10.10.10.10/api/files/sdcard',
+                    headers: { 'X-Api-Key': 'xxxxyyyzzz' }
+                })
+                    .then(res => console.log(res))
+                    .catch(err => console.error(err));
+            }
+
+            /* Printer operations > Send an arbitrary command to the printer */
+            function doPostPrintingCommands() {
+                axios({
+                    method: 'post',
+                    url: 'http://10.10.10.10/api/printer/command',
+                    headers: { 'X-Api-Key': 'xxxxyyyzzz' },
+                    data: {
+                        commands: ['M23 /musicg\~1/jingle.gco', 'M24']
+                    }
+                })
+                    .then(res => console.log(res))
+                    .catch(err => console.error(err));
+            }
+
+            /* Rest API */
+            function doPost() {
+                axios({
+                    method: 'post',
+                    url: 'https://jsonplaceholder.typicode.com/todos',
+                    headers: { 'X-Api-Key': 'xxxxyyyzzz' },
+                    data: {
+                        title: 'New Todo',
+                        completed: false
+                    }
+                })
+                    .then(res => console.log(res))
+                    .catch(err => console.error(err));
+            }
+        </script>
+
+        <!-- Import the page's JavaScript to do some stuff -->
+        <script defer>
+            const video = document.getElementById('webcam');
+            const liveView = document.getElementById('liveView');
+            const demosSection = document.getElementById('demos');
+            const enableWebcamButton = document.getElementById('webcamButton');
+
+            // Check if webcam access is supported.
+            function getUserMediaSupported() {
+                return !!(navigator.mediaDevices &&
+                    navigator.mediaDevices.getUserMedia);
+            }
+
+            // If webcam supported, add event listener to button for when user
+            // wants to activate it to call enableCam function which we will 
+            // define in the next step.
+            if (getUserMediaSupported()) {
+                enableWebcamButton.addEventListener('click', enableCam);
+            } else {
+                console.warn('getUserMedia() is not supported by your browser');
+            }
+
+            // Enable the live webcam view and start classification.
+            function enableCam(event) {
+                // Only continue if the COCO-SSD has finished loading.
+                if (!model) {
+                    return;
+                }
+
+                // Hide the button once clicked.
+                event.target.classList.add('removed');
+
+                // getUsermedia parameters to force video but not audio.
+                const constraints = {
+                    video: true
+                };
+
+                // Activate the webcam stream.
+                navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+                    video.srcObject = stream;
+                    video.addEventListener('loadeddata', predictWebcam);
+                });
+            }
+
+            // Pretend model has loaded so we can try out the webcam code.
+            var model = true;
+            demosSection.classList.remove('invisible');
+
+            // Store the resulting model in the global scope of our app.
+            var model = undefined;
+
+            // Before we can use COCO-SSD class we must wait for it to finish
+            // loading. Machine Learning models can be large and take a moment 
+            // to get everything needed to run.
+            // Note: cocoSsd is an external object loaded from our index.html
+            // script tag import so ignore any warning in Glitch.
+
+            cocoSsd.load().then(function (loadedModel) {
+                model = loadedModel;
+                // Show demo section now model is ready to use.
+                demosSection.classList.remove('invisible');
             });
-        }
-    </script>
+
+            var children = [];
+
+            // Placeholder function for next step.
+            function predictWebcam() {
+                // Now let's start classifying a frame in the stream.
+                model.detect(video).then(function (predictions) {
+                    // Remove any highlighting we did previous frame.
+                    for (let i = 0; i < children.length; i++) {
+                        liveView.removeChild(children[i]);
+                    }
+                    children.splice(0);
+
+                    // Now lets loop through predictions and draw them to the live view if
+                    // they have a high confidence score.
+                    for (let n = 0; n < predictions.length; n++) {
+                        // If we are over 66% sure we are sure we classified it right, draw it!
+                        if (predictions[n].score > 0.66) {
+                            const p = document.createElement('p');
+                            p.innerText = predictions[n].class + ' - with '
+                                + Math.round(parseFloat(predictions[n].score) * 100)
+                                + '% confidence.';
+                            p.style = 'margin-left: ' + predictions[n].bbox[0] + 'px; margin-top: '
+                                + (predictions[n].bbox[1] - 10) + 'px; width: '
+                                + (predictions[n].bbox[2] - 10) + 'px; top: 0; left: 0;';
+
+                            const highlighter = document.createElement('div');
+                            highlighter.setAttribute('class', 'highlighter');
+                            highlighter.style = 'left: ' + predictions[n].bbox[0] + 'px; top: '
+                                + predictions[n].bbox[1] + 'px; width: '
+                                + predictions[n].bbox[2] + 'px; height: '
+                                + predictions[n].bbox[3] + 'px;';
+
+                            liveView.appendChild(highlighter);
+                            liveView.appendChild(p);
+                            children.push(highlighter);
+                            children.push(p);
+                        }
+                    }
+
+                    // Call this function again to keep predicting when the browser is ready.
+                    window.requestAnimationFrame(predictWebcam);
+                });
+            }
+        </script>
 </body>
 
 </html>
